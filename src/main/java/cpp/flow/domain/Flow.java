@@ -15,24 +15,40 @@ public class Flow {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public List<Node> findAvailableNode(String nodeId){
         List<Node> nodeList = new ArrayList<>();
         List<Line> allLineList = lineList.stream()
-                .filter(line-> line.getPreNode().getId().equals(nodeId)||line.getNextNode().getId().equals(nodeId))
+                .filter(line-> line.getPreNode().getId().equals(nodeId))
                 .collect(Collectors.toList());
 
-        if(allLineList == null || allLineList.size() <= 0){
+        if(allLineList.size() <= 0){
             return null;
         }
 
         List<Line> resultList = allLineList.stream().filter(Line::isAvailable).collect(Collectors.toList());
 
-        if(resultList == null || resultList.size() <= 0){
+        if(resultList.size() <= 0){
             return null;
         }
-        resultList.forEach(line -> {
-            nodeList.add(line.getPreNode().getId().equals(nodeId) ? line.getNextNode() : line.getPreNode());
-        });
+        resultList.forEach(line -> nodeList.add(line.getNextNode()));
         return nodeList;
+    }
+
+    public Line getLine(String lineId){
+        return this.lineList.stream()
+                .filter(line -> line.getId().equals(lineId)).findFirst()
+                .orElse(null);
+    }
+
+    public boolean availableNodeContainsNode(Line line){
+        List<Node> availableNodeList = this.findAvailableNode(line.getPreNode().getId());
+
+        return availableNodeList.stream()
+                .filter(node -> node.getId().equals(line.getNextNode().getId()))
+                .findFirst().orElse(null) != null;
     }
 }

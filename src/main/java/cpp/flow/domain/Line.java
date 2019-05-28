@@ -6,13 +6,22 @@ import java.util.List;
  * Created by fenming.xue on 2019/5/27.
  */
 public class Line {
+
+    private String id;
+
     private Node preNode;
 
     private Node nextNode;
 
-    private boolean isCircle;
-
     private List<Filter> filterList;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Node getPreNode() {
         return preNode;
@@ -30,14 +39,6 @@ public class Line {
         this.nextNode = nextNode;
     }
 
-    public boolean isCircle() {
-        return isCircle;
-    }
-
-    public void setCircle(boolean circle) {
-        isCircle = circle;
-    }
-
     public List<Filter> getFilterList() {
         return filterList;
     }
@@ -53,4 +54,9 @@ public class Line {
 
         return this.filterList.stream().allMatch(Filter::match);
     }
+
+    public boolean containsNode(String nodeId){
+        return this.preNode.getId().equals(nodeId);
+    }
+
 }

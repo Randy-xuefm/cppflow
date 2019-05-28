@@ -10,13 +10,17 @@ public class FlowManager {
 
     private ConcurrentMap<String/**flowId**/,Flow> runtimeFlowMap = new ConcurrentHashMap<>(32);
 
-    public void register(Flow flow,Line line){
+    public void register(String bussinessId,Flow flow,Line line){
         this.runtimeFlowMap.putIfAbsent(flow.getId(),flow);
 
     }
 
-    public void unregister(Flow flow,Line line){
+    public void unregister(String bussinessId,Flow flow,Line line){
         this.runtimeFlowMap.remove(flow.getId());
 
+    }
+
+    public String getCurrentNodeId(String bussinessId){
+        return null;
     }
 }

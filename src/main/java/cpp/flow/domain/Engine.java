@@ -7,29 +7,67 @@ import java.util.Map;
  * Created by fenming.xue on 2019/5/27.
  */
 public class Engine {
-    private Map<String/**nodeId**/,Flow> flowMap;
+    private Map<String/**flowId**/,Flow> flowMap;
+    private FlowManager flowManager;
 
-    public void startProcess(String nodeId){
-        if(!flowMap.containsKey(nodeId)){
+    public void startProcess(String bussinessId,String flowId,String lineId){
+        if(!flowMap.containsKey(flowId)){
             return;
         }
 
-    }
-
-    public void endProcess(String nodeId){
-        if(!flowMap.containsKey(nodeId)){
+        String currentNodeId = flowManager.getCurrentNodeId(bussinessId);
+        Flow flow = this.flowMap.get(flowId);
+        if(flow == null){
+            //error
             return;
         }
+        Line line = flow.getLine(lineId);
+        if(line == null){
+            //error
+            return;
+        }
+        if(!line.getPreNode().getId().equals(currentNodeId)){
+            //error
+            return;
+        }
+
+        if(!flow.availableNodeContainsNode(line)){
+            //error
+            return;
+        }
+        this.flowManager.register(bussinessId,flow,line);
+
     }
 
-    public List<Node> findAvailableNode(String currentNodeId){
-        if(!containsNode(currentNodeId)){
+    public void endProcess(String bussinessId,String flowId,String lineId){
+        if(!flowMap.containsKey(flowId)){
+            return;
+        }
+
+        String currentNodeId = flowManager.getCurrentNodeId(bussinessId);
+        Flow flow = this.flowMap.get(flowId);
+        if(flow == null){
+            //error
+            return;
+        }
+        Line line = flow.getLine(lineId);
+        if(line == null){
+            //error
+            return;
+        }
+        if(!line.getPreNode().getId().equals(currentNodeId)){
+            //error
+            return;
+        }
+        this.flowManager.unregister(bussinessId,flow,line);
+    }
+
+    public List<Node> findAvailableNode(String bussinessId){
+        if(bussinessId == null || bussinessId.isEmpty()){
             return null;
         }
+        String currentNodeId = this.flowManager.getCurrentNodeId(bussinessId);
         return this.flowMap.get(currentNodeId).findAvailableNode(currentNodeId);
     }
 
-    private boolean containsNode(String nodeId){
-        return this.flowMap != null && this.flowMap.containsKey(nodeId);
-    }
 }

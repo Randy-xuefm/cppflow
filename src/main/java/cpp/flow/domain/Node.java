@@ -8,6 +8,8 @@ public class Node {
 
     private String name;
 
+    private String parentFlowId;
+
     public String getId() {
         return id;
     }
@@ -22,5 +24,13 @@ public class Node {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getParentFlowId() {
+        return parentFlowId;
+    }
+
+    public void setParentFlowId(String parentFlowId) {
+        this.parentFlowId = parentFlowId;
     }
 }
