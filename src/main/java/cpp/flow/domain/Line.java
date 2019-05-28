@@ -14,5 +14,43 @@ public class Line {
 
     private List<Filter> filterList;
 
+    public Node getPreNode() {
+        return preNode;
+    }
 
+    public void setPreNode(Node preNode) {
+        this.preNode = preNode;
+    }
+
+    public Node getNextNode() {
+        return nextNode;
+    }
+
+    public void setNextNode(Node nextNode) {
+        this.nextNode = nextNode;
+    }
+
+    public boolean isCircle() {
+        return isCircle;
+    }
+
+    public void setCircle(boolean circle) {
+        isCircle = circle;
+    }
+
+    public List<Filter> getFilterList() {
+        return filterList;
+    }
+
+    public void setFilterList(List<Filter> filterList) {
+        this.filterList = filterList;
+    }
+
+    public boolean isAvailable(){
+        if(this.filterList == null || this.filterList.size() <= 0){
+            return true;
+        }
+
+        return this.filterList.stream().allMatch(Filter::match);
+    }
 }

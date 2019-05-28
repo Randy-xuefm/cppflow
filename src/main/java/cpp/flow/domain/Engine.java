@@ -23,6 +23,13 @@ public class Engine {
     }
 
     public List<Node> findAvailableNode(String currentNodeId){
-        return null;
+        if(!containsNode(currentNodeId)){
+            return null;
+        }
+        return this.flowMap.get(currentNodeId).findAvailableNode(currentNodeId);
+    }
+
+    private boolean containsNode(String nodeId){
+        return this.flowMap != null && this.flowMap.containsKey(nodeId);
     }
 }
