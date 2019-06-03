@@ -11,12 +11,30 @@ public class Flow {
     private String id;
     private List<Line> lineList;
 
+    private AttachFlow parentFlow;
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<Line> getLineList() {
+        return lineList;
+    }
+
+    public void setLineList(List<Line> lineList) {
+        this.lineList = lineList;
+    }
+
+    public AttachFlow getParentFlow() {
+        return parentFlow;
+    }
+
+    public void setParentFlow(AttachFlow parentFlow) {
+        this.parentFlow = parentFlow;
     }
 
     public List<Node> findAvailableNode(String nodeId){

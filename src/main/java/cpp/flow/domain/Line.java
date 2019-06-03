@@ -7,6 +7,8 @@ import java.util.List;
  */
 public class Line {
 
+    public static final String START="START";
+
     private String id;
 
     private Node preNode;
